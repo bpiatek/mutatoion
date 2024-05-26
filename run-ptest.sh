@@ -34,7 +34,7 @@ cat > $temp_maven_settings <<EOL
 EOL
 
 # Run PIT with the dynamically generated targetClasses
-mvn org.pitest:pitest-maven:mutationCoverage --settings $temp_maven_settings
+mvn -X org.pitest:pitest-maven:mutationCoverage --settings $temp_maven_settings
 
 # Clean up the temporary Maven settings file
 rm $temp_maven_settings
