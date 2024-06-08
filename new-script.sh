@@ -39,4 +39,5 @@ fi
 echo "Running PIT for the following classes: $target_classes"
 
 # Run PIT with the dynamically generated targetClasses
-mvn -X test-compile org.pitest:pitest-maven:mutationCoverage -DtargetClasses=$target_classes
+mvn clean
+mvn test-compile org.pitest:pitest-maven:mutationCoverage -DtargetClasses=$target_classes
