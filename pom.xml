@@ -6,15 +6,21 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <compiler-plugin.version>3.12.1</compiler-plugin.version>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.10.0</quarkus.platform.version>
+        <quarkus.platform.version>3.11.1</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.2.5</surefire-plugin.version>
+        <assertj-core.version>3.25.3</assertj-core.version>
+        <pitest.version>1.16.1</pitest.version>
+        <pitest-junit5-plugin.version>1.2.1</pitest-junit5-plugin.version>
+        <equalsverifier.version>3.16.1</equalsverifier.version>
+        <rest-assured.version>5.4.0</rest-assured.version>
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
 
     <dependencyManagement>
@@ -30,14 +36,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Quarkus dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.quarkus</groupId>-->
-<!--            <artifactId>quarkus-rest</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
@@ -47,6 +50,7 @@
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
 
+        <!-- Testing dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -55,41 +59,47 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.25.3</version>
+            <version>${assertj-core.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-entry</artifactId>
-            <version>1.16.1</version>
         </dependency>
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.16.1</version>
+            <version>${equalsverifier.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jacoco</artifactId>
             <scope>test</scope>
         </dependency>
 
-
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-entry</artifactId>
+            <version>${pitest.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- PITest plugin -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.16.1</version>
+                <version>${pitest.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>${pitest-junit5-plugin.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -97,34 +107,39 @@
                     <targetTests>pl.bpiatek.*</targetTests>
                     <threads>4</threads>
                     <mutators>
-                        <mutator>EXPERIMENTAL_ARGUMENT_PROPAGATION</mutator>
-                        <mutator>FALSE_RETURNS</mutator>
-                        <mutator>TRUE_RETURNS</mutator>
-                        <mutator>CONDITIONALS_BOUNDARY</mutator>
-                        <mutator>CONSTRUCTOR_CALLS</mutator>
-                        <mutator>EMPTY_RETURNS</mutator>
-                        <mutator>INCREMENTS</mutator>
-                        <mutator>INLINE_CONSTS</mutator>
-                        <mutator>INVERT_NEGS</mutator>
-                        <mutator>MATH</mutator>
-                        <mutator>NEGATE_CONDITIONALS</mutator>
-                        <mutator>NON_VOID_METHOD_CALLS</mutator>
-                        <mutator>NULL_RETURNS</mutator>
-                        <mutator>PRIMITIVE_RETURNS</mutator>
-                        <mutator>REMOVE_CONDITIONALS_EQUAL_IF</mutator>
-                        <mutator>REMOVE_CONDITIONALS_EQUAL_ELSE</mutator>
-                        <mutator>REMOVE_CONDITIONALS_ORDER_IF</mutator>
-                        <mutator>REMOVE_CONDITIONALS_ORDER_ELSE</mutator>
-                        <mutator>VOID_METHOD_CALLS</mutator>
-                        <mutator>EXPERIMENTAL_BIG_DECIMAL</mutator>
-                        <mutator>EXPERIMENTAL_BIG_INTEGER</mutator>
-                        <mutator>EXPERIMENTAL_MEMBER_VARIABLE</mutator>
-                        <mutator>EXPERIMENTAL_NAKED_RECEIVER</mutator>
-                        <mutator>REMOVE_INCREMENTS</mutator>
-                        <mutator>EXPERIMENTAL_SWITCH</mutator>
+                        STRONGER
                     </mutators>
+<!--                    <mutators>-->
+<!--                        <mutator>EXPERIMENTAL_ARGUMENT_PROPAGATION</mutator>-->
+<!--                        <mutator>FALSE_RETURNS</mutator>-->
+<!--                        <mutator>TRUE_RETURNS</mutator>-->
+<!--                        <mutator>CONDITIONALS_BOUNDARY</mutator>-->
+<!--                        <mutator>CONSTRUCTOR_CALLS</mutator>-->
+<!--                        <mutator>EMPTY_RETURNS</mutator>-->
+<!--                        <mutator>INCREMENTS</mutator>-->
+<!--                        <mutator>INLINE_CONSTS</mutator>-->
+<!--                        <mutator>INVERT_NEGS</mutator>-->
+<!--                        <mutator>MATH</mutator>-->
+<!--                        <mutator>NEGATE_CONDITIONALS</mutator>-->
+<!--                        <mutator>NON_VOID_METHOD_CALLS</mutator>-->
+<!--                        <mutator>NULL_RETURNS</mutator>-->
+<!--                        <mutator>PRIMITIVE_RETURNS</mutator>-->
+<!--                        <mutator>REMOVE_CONDITIONALS_EQUAL_IF</mutator>-->
+<!--                        <mutator>REMOVE_CONDITIONALS_EQUAL_ELSE</mutator>-->
+<!--                        <mutator>REMOVE_CONDITIONALS_ORDER_IF</mutator>-->
+<!--                        <mutator>REMOVE_CONDITIONALS_ORDER_ELSE</mutator>-->
+<!--                        <mutator>VOID_METHOD_CALLS</mutator>-->
+<!--                        <mutator>EXPERIMENTAL_BIG_DECIMAL</mutator>-->
+<!--                        <mutator>EXPERIMENTAL_BIG_INTEGER</mutator>-->
+<!--                        <mutator>EXPERIMENTAL_MEMBER_VARIABLE</mutator>-->
+<!--                        <mutator>EXPERIMENTAL_NAKED_RECEIVER</mutator>-->
+<!--                        <mutator>REMOVE_INCREMENTS</mutator>-->
+<!--                        <mutator>EXPERIMENTAL_SWITCH</mutator>-->
+<!--                    </mutators>-->
                 </configuration>
             </plugin>
+
+            <!-- Quarkus Maven plugin -->
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
@@ -140,6 +155,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Compiler plugin -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
@@ -149,6 +166,8 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
+
+            <!-- Surefire plugin -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -159,6 +178,8 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <!-- Failsafe plugin -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -177,6 +198,26 @@
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+
+            <!-- Code Coverage report generation -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
+                            <destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
+                            <append>true</append>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

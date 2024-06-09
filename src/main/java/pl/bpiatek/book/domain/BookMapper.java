@@ -8,17 +8,15 @@ import java.util.List;
 
 class BookMapper {
 
-    private BookMapper() {
-    }
-
     static Book toEntity(CreateBookRequest request) {
         return new Book()
                 .setAuthor(request.author())
-                .setTitle(request.title());
+                .setTitle(request.title())
+                .setYear(request.year());
     }
 
     static BookResponse toCreateBookResponse(Book book) {
-        return new BookResponse(book.getId(), book.getTitle(), book.getAuthor());
+        return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getYear());
     }
 
     static GetBooksResponse toGetBooksResponse(List<Book> books) {

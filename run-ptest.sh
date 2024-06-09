@@ -4,7 +4,7 @@
 set -e
 
 # Fetch the latest changes from the main branch
-#git fetch origin main
+git fetch origin main
 
 # Fetch the list of changed Java files compared to the main branch, excluding deleted files
 changed_files=$(git diff --name-status main | grep '.java' | grep -v '^D' | awk '{print $2}')

@@ -15,7 +15,6 @@ public class BookFacade {
         this.bookDao = bookDao;
     }
 
-
     public BookResponse addBook(CreateBookRequest bookRequest) {
         var bookToSave = BookMapper.toEntity(bookRequest);
         var savedBook = bookDao.addBook(bookToSave);
