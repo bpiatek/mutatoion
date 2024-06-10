@@ -63,7 +63,7 @@ class BookFacadeTest extends DatabaseTestContext {
         var book = bookTestFixtures.aBook();
         bookTestFixtures.aBook();
 
-        var request = new GetBooksRequest(List.of(book.getId()), AUTHOR, book.getYear());
+        var request = new GetBooksRequest(List.of(book.getId()), null, null);
 
         // when
         var response = bookFacade.getBooks(request);
@@ -78,8 +78,8 @@ class BookFacadeTest extends DatabaseTestContext {
     @Test
     void shouldGetBooksAndSortByTitle() {
         // given
-        var book1 = bookTestFixtures.aBook(new CreateBookRequest("z title", "author", 2021));
-        var book2 = bookTestFixtures.aBook(new CreateBookRequest("a title", "author", 2021));
+        var book1 = bookTestFixtures.aBook(new CreateBookRequest("a title", "author", 2021));
+        var book2 = bookTestFixtures.aBook(new CreateBookRequest("z title", "author", 2021));
 
         var request = new GetBooksRequest(null, TITLE, null);
 
@@ -90,7 +90,46 @@ class BookFacadeTest extends DatabaseTestContext {
         assertSoftly(softly -> {
             softly.assertThat(response.books()).hasSize(2);
             softly.assertThat(booksIds(response))
-                    .containsExactly(book2.getId(), book1.getId());
+                    .containsExactly(book1.getId(), book2.getId());
+        });
+    }
+
+    @Test
+    void shouldGetBooksAndSortByAuthor() {
+        // given
+        var book1 = bookTestFixtures.aBook(new CreateBookRequest("z title", "a author", 2021));
+        var book2 = bookTestFixtures.aBook(new CreateBookRequest("a title", "b author", 2021));
+
+        var request = new GetBooksRequest(null, AUTHOR, null);
+
+        // when
+        var response = bookFacade.getBooks(request);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(response.books()).hasSize(2);
+            softly.assertThat(booksIds(response))
+                .containsExactly(book1.getId(), book2.getId());
+        });
+    }
+
+    @Test
+    void shouldFilterOutBooksOlderThanYear() {
+        // given
+        bookTestFixtures.aBook(new CreateBookRequest("z title", "z author", 2020));
+        var book2 = bookTestFixtures.aBook(new CreateBookRequest("c title", "c author", 2021));
+        var book3= bookTestFixtures.aBook(new CreateBookRequest("a title", "a author", 2024));
+
+        var request = new GetBooksRequest(null, null, 2021);
+
+        // when
+        var response = bookFacade.getBooks(request);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(response.books()).hasSize(2);
+            softly.assertThat(booksIds(response))
+                .containsExactly(book2.getId(), book3.getId());
         });
     }
 
