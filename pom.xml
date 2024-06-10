@@ -99,7 +99,6 @@
                     <timestampedReports>false</timestampedReports>
                 </configuration>
             </plugin>
-            i do not have to look at the keyboard0]]
 
             <!-- Quarkus Maven plugin -->
             <plugin>

@@ -3,7 +3,6 @@ package pl.bpiatek.book.domain;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import pl.bpiatek.book.dto.BookResponse;
 import pl.bpiatek.book.dto.CreateBookRequest;

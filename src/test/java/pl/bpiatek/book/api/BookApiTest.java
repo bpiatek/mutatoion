@@ -33,7 +33,7 @@ class BookApiTest extends DatabaseTestContext {
     }
 
     @Test
-    public void shouldGetBooks() {
+    void shouldGetBooks() {
         bookTestFixtures.insertBook(
                 new CreateBookRequest(
                         "Effective Java",

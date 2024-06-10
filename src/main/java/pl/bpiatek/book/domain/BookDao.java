@@ -56,6 +56,7 @@ class BookDao {
         return request.ids().stream()
                 .map(DATABASE::get)
                 .filter(Objects::nonNull)
+                // this is complaining, but I want to modify this list later :)
                 .collect(Collectors.toList());
     }
 }
