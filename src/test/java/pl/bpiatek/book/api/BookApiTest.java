@@ -20,7 +20,7 @@ class BookApiTest extends DatabaseTestContext {
     BookTestFixtures bookTestFixtures;
 
     @Test
-    public void shouldAddBook() {
+    void shouldAddBook() {
         given()
                 .contentType(ContentType.JSON)
                 .body(new CreateBookRequest("Effective Java", "Joshua Bloch", 2002))
