@@ -95,10 +95,11 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <threads>4</threads>
                     <timestampedReports>false</timestampedReports>
-                    <verbose>true</verbose>
                 </configuration>
             </plugin>
+            i do not have to look at the keyboard0]]
 
             <!-- Quarkus Maven plugin -->
             <plugin>
