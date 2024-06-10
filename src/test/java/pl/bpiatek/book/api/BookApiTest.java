@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 class BookApiTest {
     @Test
-    public void shouldAddBook() {
+    void shouldAddBook() {
         given()
                 .contentType(ContentType.JSON)
                 .body(new CreateBookRequest("Effective Java", "Joshua Bloch"))
