@@ -70,8 +70,31 @@ if [ -z "$target_tests" ]; then
   exit 0
 fi
 
-echo "Running PIT for the following classes: $target_classes"
-echo "Running PIT for the following test classes: $target_tests"
+# Print a new line
+echo ""
+
+# Print each target class on a new line
+echo "Running PIT for the following classes:"
+IFS=',' read -r -a target_classes_array <<< "$target_classes"
+for class in "${target_classes_array[@]}"; do
+  echo "$class"
+done
+
+# Print the count of target classes
+echo "Total number of target classes: ${#target_classes_array[@]}"
+
+# Print a new line
+echo ""
+
+# Print each target test on a new line
+echo "Running PIT for the following test classes:"
+IFS=',' read -r -a target_tests_array <<< "$target_tests"
+for test in "${target_tests_array[@]}"; do
+  echo "$test"
+done
+
+# Print the count of target tests
+echo "Total number of target tests: ${#target_tests_array[@]}"
 
 # Run PIT with the dynamically generated targetClasses and targetTests
 mvn clean
