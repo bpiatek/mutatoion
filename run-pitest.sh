@@ -4,10 +4,10 @@
 set -e
 
 # Fetch the latest changes from the main branch
-git fetch origin frosty-feature-fiesta
+git fetch origin main
 
 # Fetch the list of changed Java files compared to the main branch, excluding deleted files
-changed_files=$(git diff --name-status frosty-feature-fiesta | grep '.java' | grep -v '^D' | awk '{print $2}')
+changed_files=$(git diff --name-status main | grep '.java' | grep -v '^D' | awk '{print $2}')
 
 # Check if any Java files have changed
 if [ -z "$changed_files" ]; then
