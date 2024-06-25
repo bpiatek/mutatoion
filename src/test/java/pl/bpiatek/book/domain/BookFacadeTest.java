@@ -44,7 +44,7 @@ class BookFacadeTest extends DatabaseTestContext {
         var book1 = bookTestFixtures.aBook();
         var book2 = bookTestFixtures.aBook();
 
-        var request = new GetBooksRequest(null, null, null);
+        var request = new GetBooksRequest(List.of(), null, null);
 
         // when
         var response = bookFacade.getBooks(request);

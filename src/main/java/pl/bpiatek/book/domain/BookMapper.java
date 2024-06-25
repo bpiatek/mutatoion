@@ -8,6 +8,9 @@ import java.util.List;
 
 class BookMapper {
 
+    private BookMapper() {
+    }
+
     static Book toEntity(CreateBookRequest request) {
         return new Book()
                 .setAuthor(request.author())

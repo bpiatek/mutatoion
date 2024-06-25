@@ -16,12 +16,20 @@
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.2.5</surefire-plugin.version>
         <assertj-core.version>3.25.3</assertj-core.version>
+        <maven-scm-plugin.version>2.1.0</maven-scm-plugin.version>
         <pitest.version>1.16.1</pitest.version>
         <pitest-junit5-plugin.version>1.2.1</pitest-junit5-plugin.version>
         <equalsverifier.version>3.16.1</equalsverifier.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <jacoco.version>0.8.12</jacoco.version>
     </properties>
+
+    <scm>
+        <connection>scm:git:git://github.com/bpiatek/mutatoion.git</connection>
+        <url>https://github.com/bpiatek/mutatoion</url>
+        <developerConnection>https://github.com/bpiatek/mutatoion.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencyManagement>
         <dependencies>
@@ -36,6 +44,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>${maven-scm-plugin.version}</version>
+        </dependency>
+
         <!-- Quarkus dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -50,7 +64,7 @@
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
 
-        <!-- Testing dependencies -->
+        <!-- Test dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>

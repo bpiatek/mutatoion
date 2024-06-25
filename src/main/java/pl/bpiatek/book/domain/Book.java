@@ -54,14 +54,14 @@ class Book {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
         return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(year, book.year);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(id, title, author, year);
     }
 }
