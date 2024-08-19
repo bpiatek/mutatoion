@@ -1,5 +1,6 @@
 package pl.bpiatek.book.api;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -14,11 +15,8 @@ import static jakarta.ws.rs.core.Response.Status.CREATED;
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookApi {
 
-    private final BookFacade bookFacade;
-
-    BookApi(BookFacade bookFacade) {
-        this.bookFacade = bookFacade;
-    }
+    @Inject
+    BookFacade bookFacade;
 
     @POST
     public Response addBook(CreateBookRequest request) {
